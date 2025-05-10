@@ -1,65 +1,60 @@
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>給媽媽的一句話</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <title>母親節快樂</title>
   <style>
     body {
-      font-family: 'Noto Serif TC', serif;
-      text-align: center;
+      font-family: 'Microsoft JhengHei', sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 0;
       background-color: #fffdf8;
+      text-align: center;
     }
     h1 {
+      margin-top: 40px;
       font-size: 28px;
-      margin-bottom: 20px;
     }
     input[type="text"] {
-      font-family: 'Noto Serif TC', serif;
-      font-size: 20px;
       padding: 12px 16px;
-      width: 80%;
+      font-size: 18px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 60%;
       max-width: 300px;
-      border: 2px solid #ccc;
-      border-radius: 8px;
-      margin-bottom: 15px;
     }
     button {
-      font-family: 'Noto Serif TC', serif;
-      font-size: 18px;
-      padding: 10px 18px;
-      margin: 6px;
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
       border: none;
       border-radius: 6px;
-      background-color: #ffccd5;
-      color: #333;
+      background-color: #f8c8dc;
+      color: #5a2a2a;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #ffb3c1;
-    }
-    #card-container {
+    #card {
       position: relative;
       display: inline-block;
-      max-width: 100%;
+      margin-top: 30px;
     }
-    #card-img {
-      width: 100%;
+    #card img {
+      width: 90vw;
       max-width: 500px;
-      display: block;
+      height: auto;
+      border-radius: 12px;
     }
-    #signature {
+    .signature-text {
       position: absolute;
-      bottom: 20px;
-      right: 20px;
-      color: #000000;
-      font-size: 28px;
-      font-weight: bold;
-      font-family: 'ZCOOL XiaoWei', serif;
-      text-shadow: 1px 1px 2px white;
+      top: 78%;
+      left: 46%;
+      transform: translateX(-50%);
+      font-family: 'Microsoft JhengHei', sans-serif;
+      font-size: 34px;
+      color: #a94442;
+      white-space: nowrap;
     }
     canvas {
       display: none;
@@ -68,56 +63,9 @@
 </head>
 <body>
   <h1>給媽媽的一句話</h1>
-  <input type="text" id="nameInput" placeholder="在這裡輸入你的名字（或小名）">
+  <input type="text" id="nameInput" placeholder="輸入你的名字（或小名）">
   <br>
-  <button onclick="updateSignature()">寫上我的名字</button>
-  <button onclick="generateImage()">下載卡片送出愛</button>
-
-  <div id="card-container">
-    <img id="card-img" src="https://i.imgur.com/ps9qY9A.png" alt="卡片圖片">
-    <div id="signature"></div>
-  </div>
-
-  <canvas id="canvas"></canvas>
-
-  <script>
-    function updateSignature() {
-      const name = document.getElementById('nameInput').value.trim();
-      document.getElementById('signature').textContent = name || '';
-    }
-
-    function generateImage() {
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
-      const img = document.getElementById('card-img');
-      const signature = document.getElementById('signature').textContent;
-
-      const image = new Image();
-      image.crossOrigin = "anonymous";
-      image.src = img.src;
-      image.onload = () => {
-        canvas.width = image.width;
-        canvas.height = image.height;
-
-        ctx.drawImage(image, 0, 0);
-
-        ctx.font = "48px 'ZCOOL XiaoWei'";
-        ctx.fillStyle = "#000000";
-        ctx.textAlign = "right";
-        ctx.textBaseline = "bottom";
-        ctx.shadowColor = "white";
-        ctx.shadowBlur = 4;
-        ctx.fillText(signature, canvas.width - 20, canvas.height - 20);
-
-        const dataUrl = canvas.toDataURL("image/png");
-        window.open(dataUrl, "_blank");
-      };
-    }
-  </script>
-</body>
-</html>
-
-我的名字</button>
+  <button onclick="addName()">寫上我的名字</button>
   <button onclick="downloadCard()">下載卡片送出愛</button>
 
   <div id="card">
@@ -125,7 +73,7 @@
     <div class="signature-text" id="signatureText"></div>
   </div>
 
-  <canvas id="canvas" style="display: none;"></canvas>
+  <canvas id="canvas"></canvas>
 
   <script>
     function addName() {
@@ -147,7 +95,6 @@
         canvas.height = image.height;
 
         ctx.drawImage(image, 0, 0);
-
         ctx.font = "48px Microsoft JhengHei";
         ctx.fillStyle = "#a94442";
         ctx.textAlign = "center";
