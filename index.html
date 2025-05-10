@@ -2,47 +2,39 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>給媽媽的一句話</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>母親節快樂</title>
   <style>
     body {
-      font-family: 'Noto Serif TC', serif;
-      text-align: center;
+      font-family: 'Microsoft JhengHei', sans-serif;
       background-color: #fffdf8;
+      text-align: center;
       padding: 20px;
     }
     h1 {
       font-size: 28px;
-      margin-bottom: 20px;
     }
-    input[type="text"] {
-      font-size: 20px;
-      padding: 12px 16px;
+    input {
+      font-size: 18px;
+      padding: 10px;
       width: 80%;
       max-width: 300px;
-      border: 2px solid #ccc;
-      border-radius: 8px;
-      margin-bottom: 15px;
+      margin: 10px auto;
     }
     button {
-      font-size: 18px;
-      padding: 10px 18px;
-      margin: 6px;
+      font-size: 16px;
+      padding: 10px 20px;
+      margin: 8px;
+      background-color: #f8c8dc;
       border: none;
       border-radius: 6px;
-      background-color: #ffccd5;
-      color: #333;
       cursor: pointer;
-    }
-    button:hover {
-      background-color: #ffb3c1;
     }
     #card-container {
       position: relative;
       display: inline-block;
-      max-width: 100%;
+      margin-top: 20px;
     }
     #card-img {
       width: 100%;
@@ -53,10 +45,10 @@
       position: absolute;
       bottom: 20px;
       right: 20px;
-      color: #000000;
       font-size: 28px;
       font-weight: bold;
-      font-family: 'ZCOOL XiaoWei', serif;
+      color: #000;
+      font-family: 'Microsoft JhengHei', sans-serif;
       text-shadow: 1px 1px 2px white;
     }
     canvas {
@@ -66,13 +58,14 @@
 </head>
 <body>
   <h1>給媽媽的一句話</h1>
-  <input type="text" id="nameInput" placeholder="在這裡輸入你的名字（或小名）" />
-  <br />
+  <input type="text" id="nameInput" placeholder="輸入你的名字">
+  <br>
   <button onclick="updateSignature()">寫上我的名字</button>
   <button onclick="downloadCard()">下載卡片送出愛</button>
+  <button onclick="openInBrowser()">用瀏覽器開啟</button>
 
   <div id="card-container">
-    <img id="card-img" src="https://i.imgur.com/ps9qY9A.png" alt="卡片圖片" />
+    <img id="card-img" src="https://i.imgur.com/ps9qY9A.png" alt="卡片圖片">
     <div id="signature"></div>
   </div>
 
@@ -96,22 +89,29 @@
       image.onload = () => {
         canvas.width = image.width;
         canvas.height = image.height;
-
         ctx.drawImage(image, 0, 0);
-
-        ctx.font = "48px 'ZCOOL XiaoWei'";
-        ctx.fillStyle = "#000000";
+        ctx.font = "48px Microsoft JhengHei";
+        ctx.fillStyle = "#000";
         ctx.textAlign = "right";
         ctx.textBaseline = "bottom";
         ctx.shadowColor = "white";
         ctx.shadowBlur = 4;
         ctx.fillText(signature, canvas.width - 20, canvas.height - 20);
 
-        const link = document.createElement('a');
-        link.download = "mothers-day-card.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
+        const dataUrl = canvas.toDataURL("image/png");
+        const newWindow = window.open();
+        newWindow.document.write('<img src="' + dataUrl + '" style="width:100%;max-width:500px;" />');
       };
+    }
+
+    function openInBrowser() {
+      const url = window.location.href;
+      window.open(url, '_blank');
+    }
+
+    // 提示 LINE 使用者
+    if (navigator.userAgent.includes("Line")) {
+      alert("請點右上角 ... 並選擇『用其他瀏覽器開啟』，才能下載卡片喔！");
     }
   </script>
 </body>
